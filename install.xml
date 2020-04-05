@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>Dashboard Greek Map</name>
+  <code>dashboard-gr-map</code>
+  <version>1.1</version>
+  <author>webxperia</author>
+  <link>https://github.com/webxperia/oc3-dashboard-greek-map</link>
+
+  <file path="admin/language/en-gb/extension/dashboard/map.php">
+    <operation error="log">
+      <search>
+        <![CDATA[$_['heading_title']    = 'World Map';]]>
+      </search>
+      <add position="replace"><![CDATA[$_['heading_title']    = 'Greek Map';]]></add>
+    </operation>
+  </file>
+
+  <file path="admin/view/template/extension/dashboard/map_info.twig">
+    <operation error="log">
+      <search>
+        <![CDATA[<script type="text/javascript" src="view/javascript/jquery/jqvmap/maps/jquery.vmap.world.js"></script>]]>
+      </search>
+      <add position="replace"><![CDATA[<script type="text/javascript" src="view/javascript/jquery/jqvmap/maps/jquery.vmap.greece.js"></script>]]></add>
+    </operation>
+    <operation error="log">
+      <search>
+        <![CDATA[color: '#9FD5F1',]]>
+      </search>
+      <add position="replace"><![CDATA[color: '#39AD47',]]></add>
+    </operation>
+    <operation error="log">
+      <search>
+        <![CDATA[map: 'world_en',]]>
+      </search>
+      <add position="replace"><![CDATA[map: 'greece_gr',]]></add>
+    </operation>
+  </file>
+
+  <file path="admin/controller/extension/dashboard/map.php">
+    <operation error="log">
+      <search>
+        <![CDATA[ public function map() {]]>
+      </search>
+      <add position="before"><![CDATA[
+
+    private function get_map_id($postcode) {
+
+        $map_id = '';
+        // the map ids are set in admin/view/javascript/jquery/jqvmap/maps/jquery.vmap.greece.js
+
+        if ($postcode >= 10000 && $postcode <= 19999)  $map_id = 'GR-6'; // Αττική
+        
+        elseif ($postcode >= 20000 && $postcode <= 21099)  $map_id = 'GR-38'; // Κορινθία
+        elseif ($postcode >= 21000 && $postcode <= 21999)  $map_id = 'GR-37'; // Αργολίδα
+        elseif ($postcode >= 22000 && $postcode <= 22999)  $map_id = 'GR-36'; // Αρκαδία
+        elseif ($postcode >= 23000 && $postcode <= 23999)  $map_id = 'GR-39'; // Λακωνία
+        elseif ($postcode >= 24000 && $postcode <= 24999)  $map_id = 'GR-40'; // Μεσσηνία
+        elseif ($postcode >= 25000 && $postcode <= 26999)  $map_id = 'GR-8'; // Αχαΐα
+        elseif ($postcode >= 68000 && $postcode <= 68999)  $map_id = 'GR-2'; // Έβρος
+        elseif ($postcode >= 64000 && $postcode <= 65999)  $map_id = 'GR-3'; // Καβάλας
+        elseif ($postcode >= 63000 && $postcode <= 63999)  $map_id = 'GR-24'; // Χαλκιδική
+        elseif ($postcode >= 67000 && $postcode <= 67999)  $map_id = 'GR-5'; // Ξάνθη
+        elseif ($postcode >= 27000 && $postcode <= 27999)  $map_id = 'GR-10'; // Ηλεία
+        elseif ($postcode >= 58000 && $postcode <= 58900)  $map_id = 'GR-26'; // Πέλλα
+        elseif ($postcode >= 66000 && $postcode <= 66999)  $map_id = 'GR-1'; // Δράμα
+        elseif ($postcode >= 28000 && $postcode <= 28999)  $map_id = 'GR-16'; // Κεφαλληνία
+        elseif ($postcode >= 29000 && $postcode <= 29999)  $map_id = 'GR-18'; // Ζακύνθος
+        elseif ($postcode >= 30000 && $postcode <= 30999)  $map_id = 'GR-9'; // Αιτωλοακαρνανία
+        elseif ($postcode >= 31000 && $postcode <= 31999)  $map_id = 'GR-17'; // Λευκάδα
+        elseif ($postcode >= 32000 && $postcode <= 32999)  $map_id = 'GR-41'; // Βοιωτία
+        elseif ($postcode >= 33000 && $postcode <= 33999)  $map_id = 'GR-44'; // Φωκίδα
+        elseif ($postcode >= 34000 && $postcode <= 34999)  $map_id = 'GR-42'; // Εύβοια
+        elseif ($postcode >= 35000 && $postcode <= 35999)  $map_id = 'GR-45'; // Φθιώτιδα
+        elseif ($postcode >= 36000 && $postcode <= 36999)  $map_id = 'GR-43'; // Ευρυτανία
+        elseif ($postcode >= 61000 && $postcode <= 61999)  $map_id = 'GR-25'; // Κιλκίς
+        elseif ($postcode >= 37000 && $postcode <= 38999)  $map_id = 'GR-48'; // Μαγνησία
+        elseif ($postcode >= 40000 && $postcode <= 41999)  $map_id = 'GR-47'; // Λάρισα
+        elseif ($postcode >= 42000 && $postcode <= 42999)  $map_id = 'GR-49'; // Τρίκαλα
+        elseif ($postcode >= 43000 && $postcode <= 43999)  $map_id = 'GR-46'; // Καρδίτσα
+        elseif ($postcode >= 69000 && $postcode <= 69999)  $map_id = 'GR-4'; // Ροδόπη
+        elseif ($postcode >= 62000 && $postcode <= 62999)  $map_id = 'GR-28'; // Σέρρες
+        elseif ($postcode >= 60000 && $postcode <= 69999)  $map_id = 'GR-27'; // Πιερία
+        elseif ($postcode >= 44000 && $postcode <= 45999)  $map_id = 'GR-20'; // Ιωαννίνα
+        elseif ($postcode >= 46000 && $postcode <= 46999)  $map_id = 'GR-22'; // Θεσπρωτία
+        elseif ($postcode >= 47000 && $postcode <= 47999)  $map_id = 'GR-19'; // Άρτα
+        elseif ($postcode >= 48000 && $postcode <= 48999)  $map_id = 'GR-21'; // Πρέβεζα
+        elseif ($postcode >= 49000 && $postcode <= 49999)  $map_id = 'GR-15'; // Κέρκυρα
+        elseif ($postcode >= 50000 && $postcode <= 50999)  $map_id = 'GR-14'; // Κοζάνη
+        elseif ($postcode >= 51000 && $postcode <= 51999)  $map_id = 'GR-12'; // Γρεβενα
+        elseif ($postcode >= 52000 && $postcode <= 52999)  $map_id = 'GR-13'; // Καστοριά
+        elseif ($postcode >= 53000 && $postcode <= 53999)  $map_id = 'GR-11'; // Φλώρινα
+        elseif ($postcode >= 54000 && $postcode <= 57999)  $map_id = 'GR-29'; // Θεσσαλονίκη
+        elseif ($postcode >= 59000 && $postcode <= 59999)  $map_id = 'GR-23'; // Ημαθία
+        elseif ($postcode >= 70000 && $postcode <= 71999)  $map_id = 'GR-30'; // Ηράκλειο
+        elseif ($postcode >= 72000 && $postcode <= 72999)  $map_id = 'GR-32'; // Λασίθι
+        elseif ($postcode >= 73000 && $postcode <= 73999)  $map_id = 'GR-31'; // Χανία
+        elseif ($postcode >= 74000 && $postcode <= 74999)  $map_id = 'GR-33'; // Ρέθυμνο
+        elseif ($postcode >= 81000 && $postcode <= 81999)  $map_id = 'GR-51'; // Λέσβος
+        elseif ($postcode >= 82000 && $postcode <= 82999)  $map_id = 'GR-50'; // Χίος
+        elseif ($postcode >= 83000 && $postcode <= 83999)  $map_id = 'GR-52'; // Σάμος
+        elseif ($postcode >= 84000 && $postcode <= 84999)  $map_id = 'GR-34'; // Κυκλάδες
+        elseif ($postcode >= 85000 && $postcode <= 85999)  $map_id = 'GR-35'; // Δωδεκανήσα
+        
+        
+        
+        return $map_id;
+    }
+
+    ]]></add>
+    </operation>
+
+    <operation error="log">
+      <search>
+        <![CDATA[$results = $this->model_extension_dashboard_map->getTotalOrdersByCountry();]]>
+      </search>
+      <add position="replace"><![CDATA[$results = $this->model_extension_dashboard_map->getTotalOrdersByRegion();]]></add>
+    </operation>
+
+    <operation error="log">
+      <search>
+        <![CDATA['total'  => $result['total'],]]>
+      </search>
+      <add position="replace"></add>
+    </operation>
+
+    <operation error="log">
+      <search>
+        <![CDATA['amount' => $this->currency->format($result['amount'], $this->config->get('config_currency'))]]>
+      </search>
+      <add position="replace"></add>
+    </operation>
+
+
+    <operation error="log">
+      <search>
+        <![CDATA[$this->response->addHeader('Content-Type: application/json');]]>
+      </search>
+      <add position="before"><![CDATA[array_walk($json, function(&$region_data){
+            $region_data['amount'] = $this->currency->format($region_data['amount'], $this->config->get('config_currency'));
+            return $region_data;
+        });
+
+        ]]></add>
+    </operation>
+
+    <operation error="log">
+      <search>
+        <![CDATA[$json[strtolower($result['iso_code_2'])] = array(]]>
+      </search>
+      <add position="replace"><![CDATA[$map_code = $this->get_map_id($result['postcode']);
+
+      $json[$map_code] = array(
+        'total'  => (isset($json[$map_code]['total']) ? $json[$map_code]['total'] : 0) + $result['total'],
+        'amount' => (isset($json[$map_code]['amount']) ? $json[$map_code]['amount'] : 0) + $result['amount']
+        ]]></add>
+    </operation>
+  </file>
+
+  <file path="admin/model/extension/dashboard/map.php">
+    <operation error="log">
+      <search>
+        <![CDATA[public function getTotalOrdersByCountry() {]]>
+      </search>
+      <add position="before"><![CDATA[
+    public function getTotalOrdersByRegion() {
+    $implode = array();
+
+    if (is_array($this->config->get('config_complete_status'))) {
+      foreach ($this->config->get('config_complete_status') as $order_status_id) {
+        $implode[] = (int)$order_status_id;
+      }
+    }
+
+    if ($implode) {
+      $query = $this->db->query("SELECT COUNT(*) AS total, SUM(o.total) AS amount, o.shipping_postcode AS postcode FROM `" . DB_PREFIX . "order` o
+             WHERE o.order_status_id IN(" . implode(',', $implode) . ") GROUP BY postcode");
+
+      return $query->rows;
+    } else {
+      return array();
+    }
+  }
+
+]]>
+      </add>
+    </operation>
+  </file>
+</modification>
